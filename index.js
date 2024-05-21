@@ -42,8 +42,10 @@ function search() {
   console.log("tasks", tasks);
   tasks.forEach((task) => {
     const resultDiv = document.createElement("div");
+    resultDiv.className = "resultDiv";
     resultDiv.textContent = task;
     details.appendChild(resultDiv);
+    inputValue.value = "";
   });
 }
 
