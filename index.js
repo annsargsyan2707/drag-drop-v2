@@ -7,9 +7,10 @@ document.addEventListener("DOMContentLoaded", () => {
     console.log(`${addButton.id}`);
   });
 });
-
 let cardId = 0;
-const addCard = (e) => {
+let obj = {};
+
+function addCard(e) {
   const parentContainer = e.target.closest(".column");
   let inputElement = parentContainer.querySelector(".text");
   const cardTitle = inputElement.value;
@@ -25,28 +26,26 @@ const addCard = (e) => {
     console.log(`${e.target.id}`);
     parentContainer.appendChild(card);
     inputElement.value = "";
-    //inputElement.placeholder = "Enter text";
-
-    //document.getElementById("todo-container").appendChild(card);
+    obj[cardId] = cardTitle;
   }
-};
+}
+const searchBtn = document.getElementById("searchBtn");
+searchBtn.addEventListener("click", search);
 
-// const addCard = () => {
-//   const cardTitle = prompt("Введите название задачи");
-
-//   if (cardTitle) {
-//     const card = document.createElement("div");
-//     card.className = "card";
-//     card.draggable = true;
-//     card.textContent = cardTitle;
-//     card.id = `card-${cardId++}`;
-//     card.addEventListener("dragstart", dragStart);
-//     card.addEventListener("dragend", dragEnd);
-//     document.getElementById("todo-container").appendChild(card);
-//   }
-// };
-
-//addButton.addEventListener("click", addCard);
+function search() {
+  let details = document.getElementById("details");
+  let inputValue = document.getElementById("inputValue");
+  const task = inputValue.value;
+  console.log("task", task);
+  console.log(obj);
+  const tasks = Object.values(obj).filter((value) => value.includes(task));
+  console.log("tasks", tasks);
+  tasks.forEach((task) => {
+    const resultDiv = document.createElement("div");
+    resultDiv.textContent = task;
+    details.appendChild(resultDiv);
+  });
+}
 
 function dragStart(e) {
   e.dataTransfer.setData("text/plain", e.target.id);
@@ -88,3 +87,19 @@ function drop(e) {
   const card = document.getElementById(cardId);
   e.target.appendChild(card);
 }
+// const addCard = () => {
+//   const cardTitle = prompt("Введите название задачи");
+
+//   if (cardTitle) {
+//     const card = document.createElement("div");
+//     card.className = "card";
+//     card.draggable = true;
+//     card.textContent = cardTitle;
+//     card.id = `card-${cardId++}`;
+//     card.addEventListener("dragstart", dragStart);
+//     card.addEventListener("dragend", dragEnd);
+//     document.getElementById("todo-container").appendChild(card);
+//   }
+// };
+
+//addButton.addEventListener("click", addCard);
